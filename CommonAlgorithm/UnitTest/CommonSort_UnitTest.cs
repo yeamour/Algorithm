@@ -28,7 +28,25 @@ namespace UnitTest
             CommonSort.InsertionSort(data);
             Assert.IsTrue(Compare(data, rightData));
         }
-
+        [TestMethod]
+        public void BinaryInsertionSort_asc_true()
+        {
+            CommonSort.BinaryInsertionSort(data);
+            Assert.IsTrue(Compare(data, rightData));
+        }
+        [TestMethod]
+        public void ShellSort_asc_true()
+        {
+            CommonSort.ShellSort(data);
+            Assert.IsTrue(Compare(data, rightData));
+        }
+        [TestMethod]
+        public void MergeSort_asc_true()
+        {
+            CommonSort.MergeSort(data);
+            Assert.IsTrue(Compare(data, rightData));
+        }
+        
         bool Compare(int[] data, int[] rightData)
         {
             if (data == null || data.Length != rightData.Length)

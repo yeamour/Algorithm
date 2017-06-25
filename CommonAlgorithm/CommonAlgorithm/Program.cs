@@ -9,7 +9,7 @@ namespace CommonAlgorithm
         static void Main(string[] args)
         {
             int[] data = new int[] { 5, 8, 0, 4, 2, 7, 6, 1, 9, 3 };
-            CommonSort.InsertionSort(data);
+            CommonSort.MergeSort(data);
             for (int i = 0; i < data.Length; i++)
             {
                 Console.WriteLine(data[i]);
@@ -83,6 +83,124 @@ namespace CommonAlgorithm
             return true;
         }
 
+        public static bool BinaryInsertionSort(int[] data)
+        {
+            if (data == null || data.Length < 2)
+            {
+                return false;
+            }
+            int num, left, right, middle;
+            for (int i = 1; i < data.Length; i++)
+            {
+                num = data[i];
+                left = 0;
+                right = i - 1;
+                while (left <= right)
+                {
+                    middle = (left + right) / 2;
+                    if (data[middle] > num)
+                    {
+                        right = middle - 1;
+                    }
+                    else
+                        left = middle + 1;
+                }
+                for (int j = i - 1; j >= left; j--)
+                {
+                    data[j + 1] = data[j];
+                }
+                data[left] = num;
+            }
+            return true;
+        }
+
+        public static bool ShellSort(int[] data)
+        {
+            if (data == null || data.Length < 2)
+            {
+                return false;
+            }
+            int step = 0;
+            while (step < data.Length)
+            {
+                step = step * 3 + 1;
+            }
+            while (step >= 1)
+            {
+                for (int i = step; i < data.Length; i++)
+                {
+                    int num = data[i];
+                    int j = i - step;
+                    while (j >= 0 && data[j] > num)
+                    {
+                        data[j + step] = data[j];
+                        j -= step;
+                    }
+                    if (i != j + step)
+                    {
+                        data[j + step] = num;
+                    }
+                }
+                step = (step - 1) / 3;
+            }
+            
+            return true;
+        }
+
+        public static bool MergeSort(int[] data)
+        {
+            if (data == null || data.Length < 2)
+            {
+                return false;
+            }
+            leftCache = new int[data.Length / 2 + 2];
+            rightCache = new int[data.Length / 2 + 1];
+            MergeSortSplit(data, 0, data.Length - 1);
+            return true;
+        }
+        private static void MergeSortSplit(int[] data, int left, int right)
+        {
+            if (left < right)
+            {
+                int middle = (left + right) / 2;
+                MergeSortSplit(data, left, middle);
+                MergeSortSplit(data, middle + 1, right);
+                Merge(data, left, middle, right);
+            }
+        }
+        static int[] leftCache;
+        static int[] rightCache;
+        private static void  Merge(int[] data, int left, int middle, int right)
+        {
+            int leftLength = middle - left + 1;
+            int rightLength = right - middle;
+            for (int i = 0; i < leftLength; i++)
+            {
+                leftCache[i] = data[left + i];
+            }
+            for (int j = 0; j < rightLength; j++)
+            {
+                rightCache[j] = data[middle + 1 + j];
+            }
+            leftCache[leftLength] = int.MaxValue;
+            rightCache[rightLength] = int.MaxValue;
+
+            int leftIdx = 0;
+            int rightIdx = 0;
+            for (int k = left; k <= right; k++)
+            {
+                if (rightCache[rightIdx] < leftCache[leftIdx])
+                {
+                    data[k] = rightCache[rightIdx];
+                    rightIdx++;
+                }
+                else
+                {
+                    data[k] = leftCache[leftIdx];
+                    leftIdx++;
+                }
+            }
+        }
         private static void Exchange(int[] data, int i, int j)
         {
             int tmp = data[i];
