@@ -55,6 +55,12 @@ namespace UnitTest
             listData.RemoveAt(0);
             Assert.IsTrue(Compare(listData.ToArray(), rightData));
         }
+        [TestMethod]
+        public void QuickSort_asc_true()
+        {
+            CommonSort.QuickSort(data);
+            Assert.IsTrue(Compare(data, rightData));
+        }
         
         bool Compare(int[] data, int[] rightData)
         {

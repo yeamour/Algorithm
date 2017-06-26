@@ -10,10 +10,10 @@ namespace CommonAlgorithm
         {
             int[] data = new int[] { 5, 8, 0, 4, 2, 7, 6, 1, 9, 3 };
             List<int> lData = new List<int>() { 5, 8, 0, 4, 2, 7, 6, 1, 9, 3 };
-            CommonSort.HeapSort(lData);
-            for (int i = 0; i < lData.Count; i++)
+            CommonSort.QuickSort(data);
+            for (int i = 0; i < data.Length; i++)
             {
-                Console.WriteLine(lData[i]);
+                Console.WriteLine(data[i]);
             }
             Console.ReadLine();
         }
@@ -248,8 +248,33 @@ namespace CommonAlgorithm
                 Exchange(data, i, child);
             }
         }
-
-
+        public static bool QuickSort(int[] data)
+        {
+            if (data == null || data.Length < 2)
+            {
+                return false;
+            }
+            QuickSort(data, 0, data.Length - 1);
+            return true;
+        }
+        private static void QuickSort(int[] data, int left, int right)
+        {
+            if (left >= right)
+            {
+                return;
+            }
+            int m = left;
+            for (int i = left + 1; i <= right; i++)
+            {
+                if (data[i] < data[left])
+                {
+                    Exchange(data, i, ++m);
+                }
+            }
+            Exchange(data, left, m);
+            QuickSort(data, left, m - 1);
+            QuickSort(data, m + 1, right);
+        }
 
         private static void Exchange(int[] data, int i, int j)
         {
