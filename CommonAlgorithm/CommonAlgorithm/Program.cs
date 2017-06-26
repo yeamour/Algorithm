@@ -9,10 +9,11 @@ namespace CommonAlgorithm
         static void Main(string[] args)
         {
             int[] data = new int[] { 5, 8, 0, 4, 2, 7, 6, 1, 9, 3 };
-            CommonSort.MergeSort(data);
-            for (int i = 0; i < data.Length; i++)
+            List<int> lData = new List<int>() { 5, 8, 0, 4, 2, 7, 6, 1, 9, 3 };
+            CommonSort.HeapSort(lData);
+            for (int i = 0; i < lData.Count; i++)
             {
-                Console.WriteLine(data[i]);
+                Console.WriteLine(lData[i]);
             }
             Console.ReadLine();
         }
@@ -201,7 +202,62 @@ namespace CommonAlgorithm
                 }
             }
         }
+
+        public static bool HeapSort(List<int> data)
+        {
+            if (data == null || data.Count < 2)
+            {
+                return false;
+            }
+            data.Add(data[0]);
+            data[0] = -1;
+            for (int i = 2; i < data.Count; i++)
+            {
+                SiftUp(data, i);
+            }
+            for (int j = data.Count - 1; j > 1; j--)
+            {
+                Exchange(data, 1, j);
+                SiftDown(data, j - 1);
+            }
+            return true;
+        }
+        private static void SiftUp(List<int> data, int idx)
+        {
+            int p = idx / 2;
+            while (idx > 1 && data[idx] > data[p])
+            {
+                Exchange(data, idx, p);
+                idx = p;
+                p = idx / 2;
+            }
+        }
+        private static void SiftDown(List<int> data, int idx)
+        {
+            int child;
+            for (int i = 1; (child = i * 2) <= idx; i = child)
+            {
+                if (child + 1 <= idx && data[child + 1] > data[child])
+                {
+                    child++;
+                }
+                if (data[i] >= data[child])
+                {
+                    break;
+                }
+                Exchange(data, i, child);
+            }
+        }
+
+
+
         private static void Exchange(int[] data, int i, int j)
+        {
+            int tmp = data[i];
+            data[i] = data[j];
+            data[j] = tmp;
+        }
+        private static void Exchange(List<int> data, int i, int j)
         {
             int tmp = data[i];
             data[i] = data[j];

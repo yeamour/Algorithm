@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using CommonAlgorithm;
+using System.Collections.Generic;
 
 namespace UnitTest
 {
@@ -45,6 +46,14 @@ namespace UnitTest
         {
             CommonSort.MergeSort(data);
             Assert.IsTrue(Compare(data, rightData));
+        }
+        [TestMethod]
+        public void HeapSort_asc_true()
+        {
+            List<int> listData = new List<int>() { 5, 8, 0, 4, 2, 7, 6, 1, 9, 3 };
+            CommonSort.HeapSort(listData);
+            listData.RemoveAt(0);
+            Assert.IsTrue(Compare(listData.ToArray(), rightData));
         }
         
         bool Compare(int[] data, int[] rightData)
